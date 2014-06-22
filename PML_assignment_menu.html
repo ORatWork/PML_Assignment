@@ -1,0 +1,74 @@
+<html><head><link rel=stylesheet href=R2HTML.css type=text/css> </head><body bgcolor="#E5F5FF">  <center> <img src=R2HTMLlogo.gif> <hr size=1></center><br>
+<br><li><a class=command href='./PML_assignment_main.html#Num2' target=main> HTML.title("Practical Machine Learning Assignment", HR = 1)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num3' target=main> set.seed(12321)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num4' target=main> pml_write_files = function(x) {    n = length(x)    for (i in 1:n) {        filename = paste0("problem_id_", i, ".txt")        write.table(x[i], file = filename, quote = FALSE, row.names = FALSE,             col.names = FALSE)    }}</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num5' target=main> HTML.title("Review and adjust available training data", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num6' target=main> RawData <- read.csv(file.choose(), header = TRUE, sep = ",",     na.strings = c("", "NA", "?"))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num7' target=main> dim(RawData)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num8' target=main> str(RawData)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num9' target=main> summary(RawData)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num10' target=main> HTML.title("Preprocess data and Exploratory data analysis", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num11' target=main> df <- RawData</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num12' target=main> Threshold <- 0.8</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num13' target=main> RemovedCols <- 0</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num14' target=main> NbrRows <- dim(df)[1]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num15' target=main> for (i in names(df)) {    tmp <- sum(!is.na(df[[i]]))    tmp <- tmp/NbrRows    if (tmp < Threshold) {        df[[i]] <- NULL        RemovedCols <- RemovedCols + 1    }}</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num16' target=main> print(RemovedCols)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num17' target=main> inTrain <- createDataPartition(df$classe, p = 0.6, list = FALSE)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num18' target=main> Train <- df[inTrain, ]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num19' target=main> Test <- df[-inTrain, ]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num20' target=main> nsv <- nearZeroVar(Train)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num21' target=main> print(nsv)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num22' target=main> Train <- Train[, -nsv]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num23' target=main> Test <- Test[, -nsv]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num24' target=main> Nbr <- dim(Train)[2]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num25' target=main> MaxDim <- 6</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num26' target=main> c <- NULL</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num27' target=main> for (j in 1:MaxDim) c <- append(c, names(Train)[j], after = length(c))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num28' target=main> HTML.title("Feature plot of uncorrelated features", HR = 2)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num29' target=main> print(featurePlot(x = Train[, c], y = Train$classe, plot = "pairs"))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num30' target=main> HTMLplot()</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num31' target=main> RemoveCols <- c(1, 2, 3, 4, 5, 6)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num32' target=main> Train <- Train[, -RemoveCols]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num33' target=main> Test <- Test[, -RemoveCols]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num34' target=main> HTML.title("Cross validation of predictors", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num35' target=main> require(randomForest)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num36' target=main> CVResult <- rfcv(Train[, -53], Train$classe, step = 0.5)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num37' target=main> HTML.title("Corss validation Plot", HR = 2)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num38' target=main> with(CVResult, plot(n.var, error.cv, log = "x", type = "o", lwd = 2,     ylab = "Error Rate", xlab = "Number of predictors", main = "Cross Validation Error rate vs Number of predictors"))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num39' target=main> HTMLplot()</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num40' target=main> HTML.title("Train a classification model", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num41' target=main> trContr <- trainControl(method = "cv", number = 5)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num42' target=main> modelFit <- train(classe ~ ., data = Train, method = "rf", trControl = trContr)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num43' target=main> HTML.title("Training results", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num44' target=main> modelFit</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num45' target=main> modelFit$finalModel</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num46' target=main> HTML.title("Variable importance plot", HR = 2)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num47' target=main> varImpPlot(modelFit$finalModel)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num48' target=main> HTMLplot()</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num49' target=main> df.rfImportance <- data.frame(variable = names(modelFit$finalModel$importance[,     1]), importance = modelFit$finalModel$importance[, 1])</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num50' target=main> df.rfImportance <- df.rfImportance[order(-df.rfImportance[, 2]),     ]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num51' target=main> df.rfImportance$variable <- as.character(df.rfImportance$variable)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num52' target=main> ThresholdImp <- df.rfImportance[14, ]$importance</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num53' target=main> tmp <- df.rfImportance[df.rfImportance$importance > ThresholdImp,     ]$variable</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num54' target=main> NamesSmall <- append(tmp, c("classe"), after = length(tmp))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num55' target=main> HTML.title("Variables in scope, based on cross validation plot, 13 in total",     HR = 2)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num56' target=main> NamesSmall</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num57' target=main> TrainLess <- Train[, NamesSmall]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num58' target=main> TestLess <- Test[, NamesSmall]</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num59' target=main> SmallmodelFit <- train(classe ~ ., data = TrainLess, method = "rf")</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num60' target=main> HTML.title("Training results Smaller model", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num61' target=main> SmallmodelFit</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num62' target=main> SmallmodelFit$finalModel</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num63' target=main> HTML.title("Variable importance plot", HR = 2)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num64' target=main> varImpPlot(SmallmodelFit$finalModel)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num65' target=main> HTMLplot()</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num66' target=main> HTML.title("Test model Accuracy", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num67' target=main> Smallpredictions <- predict(SmallmodelFit, TestLess)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num68' target=main> print(confusionMatrix(Smallpredictions, TestLess$classe))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num69' target=main> TestData <- read.csv(file.choose(), header = TRUE, sep = ",",     na.strings = c("", "NA", "?"))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num70' target=main> dim(TestData)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num71' target=main> str(TestData)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num72' target=main> HTML.title("Prediction", HR = 3)</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num73' target=main> PredictTest <- as.character(predict(SmallmodelFit, TestData))</a>
+<br><li><a class=command href='./PML_assignment_main.html#Num74' target=main> pml_write_files(PredictTest)</a>

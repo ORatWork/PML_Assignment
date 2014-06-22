@@ -1,0 +1,1953 @@
+<html xmlns:mml="http://www.w3.org/1998/Math/MathML">
+<head>
+<title> R output </title>
+<link rel=stylesheet href="R2HTML.css" type=text/css>
+<object id="mathplayer" classid="clsid:32F66A20-7614-11D4-BD11-00104BD3F987"></object>
+<?import namespace="mml" implementation="#mathplayer"?>
+<script type="text/javascript" src="ASCIIMathML.js"></script>
+<link href="./runtime/styles/xp/grid.css" rel="stylesheet" type="text/css" ></link>
+<link href="gridR2HTML.css" rel="stylesheet" type="text/css" ></link>
+
+<script src="./runtime/lib/grid.js"></script>
+
+<script src="./gridR2HTML.js"></script>
+<script>
+   nequations=0;
+</script>
+</head>
+<body onload="translate()" bgcolor= FFFFFF background="" >
+ <h1 > Practical Machine Learning Assignment</h1>
+
+<a name=Num2>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Practical Machine Learning Assignment", HR = 1)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num3>&nbsp;</a>
+<p><xmp class=command>> set.seed(12321)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num4>&nbsp;</a>
+<p><xmp class=command>> pml_write_files = function(x) {</xmp></p>
+
+<p><xmp class=command>>     n = length(x)</xmp></p>
+
+<p><xmp class=command>>     for (i in 1:n) {</xmp></p>
+
+<p><xmp class=command>>         filename = paste0("problem_id_", i, ".txt")</xmp></p>
+
+<p><xmp class=command>>         write.table(x[i], file = filename, quote = FALSE, row.names = FALSE, </xmp></p>
+
+<p><xmp class=command>>             col.names = FALSE)</xmp></p>
+
+<p><xmp class=command>>     }</xmp></p>
+
+<p><xmp class=command>> }</xmp></p>
+
+ <h3 > Review and adjust available training data</h3>
+
+<a name=Num5>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Review and adjust available training data", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num6>&nbsp;</a>
+<p><xmp class=command>> RawData <- read.csv(file.choose(), header = TRUE, sep = ",", </xmp></p>
+
+<p><xmp class=command>>     na.strings = c("", "NA", "?"))</xmp></p>
+
+<a name=Num7>&nbsp;</a>
+<p><xmp class=command>> dim(RawData)</xmp></p>
+
+<p class='integer'>19622&nbsp; 160</p>
+
+<a name=Num8>&nbsp;</a>
+<p><xmp class=command>> str(RawData)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num9>&nbsp;</a>
+<p><xmp class=command>> summary(RawData)</xmp></p>
+
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>      X</th><th>   user_name</th><th>raw_timestamp_part_1</th><th>raw_timestamp_part_2</th><th>         cvtd_timestamp</th><th>new_window</th><th>  num_window</th><th>  roll_belt</th><th>  pitch_belt</th><th>   yaw_belt</th><th>total_accel_belt</th><th>kurtosis_roll_belt</th><th>kurtosis_picth_belt</th><th>kurtosis_yaw_belt</th><th>skewness_roll_belt</th><th>skewness_roll_belt.1</th><th>skewness_yaw_belt</th><th>max_roll_belt</th><th>max_picth_belt</th><th> max_yaw_belt</th><th>min_roll_belt</th><th>min_pitch_belt</th><th> min_yaw_belt</th><th>amplitude_roll_belt</th><th>amplitude_pitch_belt</th><th>amplitude_yaw_belt</th><th>var_total_accel_belt</th><th>avg_roll_belt</th><th>stddev_roll_belt</th><th>var_roll_belt</th><th>avg_pitch_belt</th><th>stddev_pitch_belt</th><th>var_pitch_belt</th><th> avg_yaw_belt</th><th>stddev_yaw_belt</th><th> var_yaw_belt</th><th> gyros_belt_x</th><th> gyros_belt_y</th><th> gyros_belt_z</th><th> accel_belt_x</th><th> accel_belt_y</th><th> accel_belt_z</th><th>magnet_belt_x</th><th>magnet_belt_y</th><th>magnet_belt_z</th><th>   roll_arm</th><th>  pitch_arm</th><th>   yaw_arm</th><th>total_accel_arm</th><th>var_accel_arm</th><th> avg_roll_arm</th><th>stddev_roll_arm</th><th> var_roll_arm</th><th>avg_pitch_arm</th><th>stddev_pitch_arm</th><th>var_pitch_arm</th><th> avg_yaw_arm</th><th>stddev_yaw_arm</th><th> var_yaw_arm</th><th> gyros_arm_x</th><th> gyros_arm_y</th><th> gyros_arm_z</th><th> accel_arm_x</th><th> accel_arm_y</th><th> accel_arm_z</th><th> magnet_arm_x</th><th> magnet_arm_y</th><th> magnet_arm_z</th><th>kurtosis_roll_arm</th><th>kurtosis_picth_arm</th><th>kurtosis_yaw_arm</th><th>skewness_roll_arm</th><th>skewness_pitch_arm</th><th>skewness_yaw_arm</th><th> max_roll_arm</th><th>max_picth_arm</th><th> max_yaw_arm</th><th> min_roll_arm</th><th>min_pitch_arm</th><th> min_yaw_arm</th><th>amplitude_roll_arm</th><th>amplitude_pitch_arm</th><th>amplitude_yaw_arm</th><th>roll_dumbbell</th><th>pitch_dumbbell</th><th> yaw_dumbbell</th><th>kurtosis_roll_dumbbell</th><th>kurtosis_picth_dumbbell</th><th>kurtosis_yaw_dumbbell</th><th>skewness_roll_dumbbell</th><th>skewness_pitch_dumbbell</th><th>skewness_yaw_dumbbell</th><th>max_roll_dumbbell</th><th>max_picth_dumbbell</th><th>max_yaw_dumbbell</th><th>min_roll_dumbbell</th><th>min_pitch_dumbbell</th><th>min_yaw_dumbbell</th><th>amplitude_roll_dumbbell</th><th>amplitude_pitch_dumbbell</th><th>amplitude_yaw_dumbbell</th><th>total_accel_dumbbell</th><th>var_accel_dumbbell</th><th>avg_roll_dumbbell</th><th>stddev_roll_dumbbell</th><th>var_roll_dumbbell</th><th>avg_pitch_dumbbell</th><th>stddev_pitch_dumbbell</th><th>var_pitch_dumbbell</th><th>avg_yaw_dumbbell</th><th>stddev_yaw_dumbbell</th><th>var_yaw_dumbbell</th><th>gyros_dumbbell_x</th><th>gyros_dumbbell_y</th><th>gyros_dumbbell_z</th><th>accel_dumbbell_x</th><th>accel_dumbbell_y</th><th>accel_dumbbell_z</th><th>magnet_dumbbell_x</th><th>magnet_dumbbell_y</th><th>magnet_dumbbell_z</th><th> roll_forearm</th><th>pitch_forearm</th><th> yaw_forearm</th><th>kurtosis_roll_forearm</th><th>kurtosis_picth_forearm</th><th>kurtosis_yaw_forearm</th><th>skewness_roll_forearm</th><th>skewness_pitch_forearm</th><th>skewness_yaw_forearm</th><th>max_roll_forearm</th><th>max_picth_forearm</th><th>max_yaw_forearm</th><th>min_roll_forearm</th><th>min_pitch_forearm</th><th>min_yaw_forearm</th><th>amplitude_roll_forearm</th><th>amplitude_pitch_forearm</th><th>amplitude_yaw_forearm</th><th>total_accel_forearm</th><th>var_accel_forearm</th><th>avg_roll_forearm</th><th>stddev_roll_forearm</th><th>var_roll_forearm</th><th>avg_pitch_forearm</th><th>stddev_pitch_forearm</th><th>var_pitch_forearm</th><th>avg_yaw_forearm</th><th>stddev_yaw_forearm</th><th>var_yaw_forearm</th><th>gyros_forearm_x</th><th>gyros_forearm_y</th><th>gyros_forearm_z</th><th>accel_forearm_x</th><th>accel_forearm_y</th><th>accel_forearm_z</th><th>magnet_forearm_x</th><th>magnet_forearm_y</th><th>magnet_forearm_z</th><th>classe</th> </tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>Min.   :    1           </td>
+<td class=cellinside>adelmo  :3892           </td>
+<td class=cellinside>Min.   :1.322e+09       </td>
+<td class=cellinside>Min.   :   294          </td>
+<td class=cellinside>28/11/2011 14:14: 1498  </td>
+<td class=cellinside>no :19216               </td>
+<td class=cellinside>Min.   :  1.0           </td>
+<td class=cellinside>Min.   :-28.90          </td>
+<td class=cellinside>Min.   :-55.8000        </td>
+<td class=cellinside>Min.   :-180.00         </td>
+<td class=cellinside>Min.   : 0.00           </td>
+<td class=cellinside>#DIV/0!  :   10         </td>
+<td class=cellinside>#DIV/0!  :   32         </td>
+<td class=cellinside>#DIV/0!:  406           </td>
+<td class=cellinside>#DIV/0!  :    9         </td>
+<td class=cellinside>#DIV/0!  :   32         </td>
+<td class=cellinside>#DIV/0!:  406           </td>
+<td class=cellinside>Min.   :-94.300         </td>
+<td class=cellinside>Min.   : 3.00           </td>
+<td class=cellinside>-1.1   :   30           </td>
+<td class=cellinside>Min.   :-180.00         </td>
+<td class=cellinside>Min.   : 0.00           </td>
+<td class=cellinside>-1.1   :   30           </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   : 0.000          </td>
+<td class=cellinside>#DIV/0!:   10           </td>
+<td class=cellinside>Min.   : 0.000          </td>
+<td class=cellinside>Min.   :-27.40          </td>
+<td class=cellinside>Min.   : 0.000          </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :-51.400         </td>
+<td class=cellinside>Min.   :0.000           </td>
+<td class=cellinside>Min.   : 0.000          </td>
+<td class=cellinside>Min.   :-138.300        </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :    0.000       </td>
+<td class=cellinside>Min.   :-1.040000       </td>
+<td class=cellinside>Min.   :-0.64000        </td>
+<td class=cellinside>Min.   :-1.4600         </td>
+<td class=cellinside>Min.   :-120.000        </td>
+<td class=cellinside>Min.   :-69.00          </td>
+<td class=cellinside>Min.   :-275.00         </td>
+<td class=cellinside>Min.   :-52.0           </td>
+<td class=cellinside>Min.   :354.0           </td>
+<td class=cellinside>Min.   :-623.0          </td>
+<td class=cellinside>Min.   :-180.00         </td>
+<td class=cellinside>Min.   :-88.800         </td>
+<td class=cellinside>Min.   :-180.0000       </td>
+<td class=cellinside>Min.   : 1.00           </td>
+<td class=cellinside>Min.   :  0.00          </td>
+<td class=cellinside>Min.   :-166.67         </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :    0.000       </td>
+<td class=cellinside>Min.   :-81.773         </td>
+<td class=cellinside>Min.   : 0.000          </td>
+<td class=cellinside>Min.   :   0.000        </td>
+<td class=cellinside>Min.   :-173.440        </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :    0.000       </td>
+<td class=cellinside>Min.   :-6.37000        </td>
+<td class=cellinside>Min.   :-3.4400         </td>
+<td class=cellinside>Min.   :-2.3300         </td>
+<td class=cellinside>Min.   :-404.00         </td>
+<td class=cellinside>Min.   :-318.0          </td>
+<td class=cellinside>Min.   :-636.00         </td>
+<td class=cellinside>Min.   :-584.0          </td>
+<td class=cellinside>Min.   :-392.0          </td>
+<td class=cellinside>Min.   :-597.0          </td>
+<td class=cellinside>#DIV/0! :   78          </td>
+<td class=cellinside>#DIV/0! :   80          </td>
+<td class=cellinside>#DIV/0! :   11          </td>
+<td class=cellinside>#DIV/0! :   77          </td>
+<td class=cellinside>#DIV/0! :   80          </td>
+<td class=cellinside>#DIV/0! :   11          </td>
+<td class=cellinside>Min.   :-73.100         </td>
+<td class=cellinside>Min.   :-173.000        </td>
+<td class=cellinside>Min.   : 4.00           </td>
+<td class=cellinside>Min.   :-89.10          </td>
+<td class=cellinside>Min.   :-180.00         </td>
+<td class=cellinside>Min.   : 1.00           </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   : 0.00           </td>
+<td class=cellinside>Min.   :-153.71         </td>
+<td class=cellinside>Min.   :-149.59         </td>
+<td class=cellinside>Min.   :-150.871        </td>
+<td class=cellinside>#DIV/0!:    5           </td>
+<td class=cellinside>-0.5464:    2           </td>
+<td class=cellinside>#DIV/0!:  406           </td>
+<td class=cellinside>#DIV/0!:    4           </td>
+<td class=cellinside>-0.2328:    2           </td>
+<td class=cellinside>#DIV/0!:  406           </td>
+<td class=cellinside>Min.   :-70.10          </td>
+<td class=cellinside>Min.   :-112.90         </td>
+<td class=cellinside>-0.6   :   20           </td>
+<td class=cellinside>Min.   :-149.60         </td>
+<td class=cellinside>Min.   :-147.00         </td>
+<td class=cellinside>-0.6   :   20           </td>
+<td class=cellinside>Min.   :  0.00          </td>
+<td class=cellinside>Min.   :  0.00          </td>
+<td class=cellinside>#DIV/0!:    5           </td>
+<td class=cellinside>Min.   : 0.00           </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :-128.96         </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :    0.00        </td>
+<td class=cellinside>Min.   :-70.73          </td>
+<td class=cellinside>Min.   : 0.000          </td>
+<td class=cellinside>Min.   :   0.00         </td>
+<td class=cellinside>Min.   :-117.950        </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :    0.00        </td>
+<td class=cellinside>Min.   :-204.0000       </td>
+<td class=cellinside>Min.   :-2.10000        </td>
+<td class=cellinside>Min.   : -2.380         </td>
+<td class=cellinside>Min.   :-419.00         </td>
+<td class=cellinside>Min.   :-189.00         </td>
+<td class=cellinside>Min.   :-334.00         </td>
+<td class=cellinside>Min.   :-643.0          </td>
+<td class=cellinside>Min.   :-3600           </td>
+<td class=cellinside>Min.   :-262.00         </td>
+<td class=cellinside>Min.   :-180.0000       </td>
+<td class=cellinside>Min.   :-72.50          </td>
+<td class=cellinside>Min.   :-180.00         </td>
+<td class=cellinside>#DIV/0!:   84           </td>
+<td class=cellinside>#DIV/0!:   85           </td>
+<td class=cellinside>#DIV/0!:  406           </td>
+<td class=cellinside>#DIV/0!:   83           </td>
+<td class=cellinside>#DIV/0!:   85           </td>
+<td class=cellinside>#DIV/0!:  406           </td>
+<td class=cellinside>Min.   :-66.60          </td>
+<td class=cellinside>Min.   :-151.00         </td>
+<td class=cellinside>#DIV/0!:   84           </td>
+<td class=cellinside>Min.   :-72.500         </td>
+<td class=cellinside>Min.   :-180.00         </td>
+<td class=cellinside>#DIV/0!:   84           </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :  0.0           </td>
+<td class=cellinside>#DIV/0!:   84           </td>
+<td class=cellinside>Min.   :  0.00          </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :-177.234        </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :    0.00        </td>
+<td class=cellinside>Min.   :-68.17          </td>
+<td class=cellinside>Min.   : 0.000          </td>
+<td class=cellinside>Min.   :   0.000        </td>
+<td class=cellinside>Min.   :-155.06         </td>
+<td class=cellinside>Min.   :  0.000         </td>
+<td class=cellinside>Min.   :    0.00        </td>
+<td class=cellinside>Min.   :-22.000         </td>
+<td class=cellinside>Min.   : -7.02000       </td>
+<td class=cellinside>Min.   : -8.0900        </td>
+<td class=cellinside>Min.   :-498.00         </td>
+<td class=cellinside>Min.   :-632.0          </td>
+<td class=cellinside>Min.   :-446.00         </td>
+<td class=cellinside>Min.   :-1280.0         </td>
+<td class=cellinside>Min.   :-896.0          </td>
+<td class=cellinside>Min.   :-973.0          </td>
+<td class=cellinside>A:5580                  </td></tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>1st Qu.: 4906           </td>
+<td class=cellinside>carlitos:3112           </td>
+<td class=cellinside>1st Qu.:1.323e+09       </td>
+<td class=cellinside>1st Qu.:252912          </td>
+<td class=cellinside>05/12/2011 11:24: 1497  </td>
+<td class=cellinside>yes:  406               </td>
+<td class=cellinside>1st Qu.:222.0           </td>
+<td class=cellinside>1st Qu.:  1.10          </td>
+<td class=cellinside>1st Qu.:  1.7600        </td>
+<td class=cellinside>1st Qu.: -88.30         </td>
+<td class=cellinside>1st Qu.: 3.00           </td>
+<td class=cellinside>-1.908453:    2         </td>
+<td class=cellinside>47.000000:    4         </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>0.000000 :    4         </td>
+<td class=cellinside>0.000000 :    4         </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>1st Qu.:-88.000         </td>
+<td class=cellinside>1st Qu.: 5.00           </td>
+<td class=cellinside>-1.4   :   29           </td>
+<td class=cellinside>1st Qu.: -88.40         </td>
+<td class=cellinside>1st Qu.: 3.00           </td>
+<td class=cellinside>-1.4   :   29           </td>
+<td class=cellinside>1st Qu.:  0.300         </td>
+<td class=cellinside>1st Qu.: 1.000          </td>
+<td class=cellinside>0.00   :   12           </td>
+<td class=cellinside>1st Qu.: 0.100          </td>
+<td class=cellinside>1st Qu.:  1.10          </td>
+<td class=cellinside>1st Qu.: 0.200          </td>
+<td class=cellinside>1st Qu.:  0.000         </td>
+<td class=cellinside>1st Qu.:  2.025         </td>
+<td class=cellinside>1st Qu.:0.200           </td>
+<td class=cellinside>1st Qu.: 0.000          </td>
+<td class=cellinside>1st Qu.: -88.175        </td>
+<td class=cellinside>1st Qu.:  0.100         </td>
+<td class=cellinside>1st Qu.:    0.010       </td>
+<td class=cellinside>1st Qu.:-0.030000       </td>
+<td class=cellinside>1st Qu.: 0.00000        </td>
+<td class=cellinside>1st Qu.:-0.2000         </td>
+<td class=cellinside>1st Qu.: -21.000        </td>
+<td class=cellinside>1st Qu.:  3.00          </td>
+<td class=cellinside>1st Qu.:-162.00         </td>
+<td class=cellinside>1st Qu.:  9.0           </td>
+<td class=cellinside>1st Qu.:581.0           </td>
+<td class=cellinside>1st Qu.:-375.0          </td>
+<td class=cellinside>1st Qu.: -31.77         </td>
+<td class=cellinside>1st Qu.:-25.900         </td>
+<td class=cellinside>1st Qu.: -43.1000       </td>
+<td class=cellinside>1st Qu.:17.00           </td>
+<td class=cellinside>1st Qu.:  9.03          </td>
+<td class=cellinside>1st Qu.: -38.37         </td>
+<td class=cellinside>1st Qu.:  1.376         </td>
+<td class=cellinside>1st Qu.:    1.898       </td>
+<td class=cellinside>1st Qu.:-22.770         </td>
+<td class=cellinside>1st Qu.: 1.642          </td>
+<td class=cellinside>1st Qu.:   2.697        </td>
+<td class=cellinside>1st Qu.: -29.198        </td>
+<td class=cellinside>1st Qu.:  2.577         </td>
+<td class=cellinside>1st Qu.:    6.642       </td>
+<td class=cellinside>1st Qu.:-1.33000        </td>
+<td class=cellinside>1st Qu.:-0.8000         </td>
+<td class=cellinside>1st Qu.:-0.0700         </td>
+<td class=cellinside>1st Qu.:-242.00         </td>
+<td class=cellinside>1st Qu.: -54.0          </td>
+<td class=cellinside>1st Qu.:-143.00         </td>
+<td class=cellinside>1st Qu.:-300.0          </td>
+<td class=cellinside>1st Qu.:  -9.0          </td>
+<td class=cellinside>1st Qu.: 131.2          </td>
+<td class=cellinside>-0.02438:    1          </td>
+<td class=cellinside>-0.00484:    1          </td>
+<td class=cellinside>0.55844 :    2          </td>
+<td class=cellinside>-0.00051:    1          </td>
+<td class=cellinside>-0.00184:    1          </td>
+<td class=cellinside>-1.62032:    2          </td>
+<td class=cellinside>1st Qu.: -0.175         </td>
+<td class=cellinside>1st Qu.:  -1.975        </td>
+<td class=cellinside>1st Qu.:29.00           </td>
+<td class=cellinside>1st Qu.:-41.98          </td>
+<td class=cellinside>1st Qu.: -72.62         </td>
+<td class=cellinside>1st Qu.: 8.00           </td>
+<td class=cellinside>1st Qu.:  5.425         </td>
+<td class=cellinside>1st Qu.:  9.925         </td>
+<td class=cellinside>1st Qu.:13.00           </td>
+<td class=cellinside>1st Qu.: -18.49         </td>
+<td class=cellinside>1st Qu.: -40.89         </td>
+<td class=cellinside>1st Qu.: -77.644        </td>
+<td class=cellinside>-0.2583:    2           </td>
+<td class=cellinside>-0.9334:    2           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>-0.9324:    2           </td>
+<td class=cellinside>-0.3521:    2           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>1st Qu.:-27.15          </td>
+<td class=cellinside>1st Qu.: -66.70         </td>
+<td class=cellinside>0.2    :   19           </td>
+<td class=cellinside>1st Qu.: -59.67         </td>
+<td class=cellinside>1st Qu.: -91.80         </td>
+<td class=cellinside>0.2    :   19           </td>
+<td class=cellinside>1st Qu.: 14.97          </td>
+<td class=cellinside>1st Qu.: 17.06          </td>
+<td class=cellinside>0.00   :  401           </td>
+<td class=cellinside>1st Qu.: 4.00           </td>
+<td class=cellinside>1st Qu.:  0.378         </td>
+<td class=cellinside>1st Qu.: -12.33         </td>
+<td class=cellinside>1st Qu.:  4.639         </td>
+<td class=cellinside>1st Qu.:   21.52        </td>
+<td class=cellinside>1st Qu.:-42.00          </td>
+<td class=cellinside>1st Qu.: 3.482          </td>
+<td class=cellinside>1st Qu.:  12.12         </td>
+<td class=cellinside>1st Qu.: -76.696        </td>
+<td class=cellinside>1st Qu.:  3.885         </td>
+<td class=cellinside>1st Qu.:   15.09        </td>
+<td class=cellinside>1st Qu.:  -0.0300       </td>
+<td class=cellinside>1st Qu.:-0.14000        </td>
+<td class=cellinside>1st Qu.: -0.310         </td>
+<td class=cellinside>1st Qu.: -50.00         </td>
+<td class=cellinside>1st Qu.:  -8.00         </td>
+<td class=cellinside>1st Qu.:-142.00         </td>
+<td class=cellinside>1st Qu.:-535.0          </td>
+<td class=cellinside>1st Qu.:  231           </td>
+<td class=cellinside>1st Qu.: -45.00         </td>
+<td class=cellinside>1st Qu.:  -0.7375       </td>
+<td class=cellinside>1st Qu.:  0.00          </td>
+<td class=cellinside>1st Qu.: -68.60         </td>
+<td class=cellinside>-0.8079:    2           </td>
+<td class=cellinside>-0.0073:    1           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>-0.1912:    2           </td>
+<td class=cellinside>0.0000 :    4           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>1st Qu.:  0.00          </td>
+<td class=cellinside>1st Qu.:   0.00         </td>
+<td class=cellinside>-1.2   :   32           </td>
+<td class=cellinside>1st Qu.: -6.075         </td>
+<td class=cellinside>1st Qu.:-175.00         </td>
+<td class=cellinside>-1.2   :   32           </td>
+<td class=cellinside>1st Qu.:  1.125         </td>
+<td class=cellinside>1st Qu.:  2.0           </td>
+<td class=cellinside>0.00   :  322           </td>
+<td class=cellinside>1st Qu.: 29.00          </td>
+<td class=cellinside>1st Qu.:  6.759         </td>
+<td class=cellinside>1st Qu.:  -0.909        </td>
+<td class=cellinside>1st Qu.:  0.428         </td>
+<td class=cellinside>1st Qu.:    0.18        </td>
+<td class=cellinside>1st Qu.:  0.00          </td>
+<td class=cellinside>1st Qu.: 0.336          </td>
+<td class=cellinside>1st Qu.:   0.113        </td>
+<td class=cellinside>1st Qu.: -26.26         </td>
+<td class=cellinside>1st Qu.:  0.524         </td>
+<td class=cellinside>1st Qu.:    0.27        </td>
+<td class=cellinside>1st Qu.: -0.220         </td>
+<td class=cellinside>1st Qu.: -1.46000       </td>
+<td class=cellinside>1st Qu.: -0.1800        </td>
+<td class=cellinside>1st Qu.:-178.00         </td>
+<td class=cellinside>1st Qu.:  57.0          </td>
+<td class=cellinside>1st Qu.:-182.00         </td>
+<td class=cellinside>1st Qu.: -616.0         </td>
+<td class=cellinside>1st Qu.:   2.0          </td>
+<td class=cellinside>1st Qu.: 191.0          </td>
+<td class=cellinside>B:3797                  </td></tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>Median : 9812           </td>
+<td class=cellinside>charles :3536           </td>
+<td class=cellinside>Median :1.323e+09       </td>
+<td class=cellinside>Median :496380          </td>
+<td class=cellinside>30/11/2011 17:11: 1440  </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Median :424.0           </td>
+<td class=cellinside>Median :113.00          </td>
+<td class=cellinside>Median :  5.2800        </td>
+<td class=cellinside>Median : -13.00         </td>
+<td class=cellinside>Median :17.00           </td>
+<td class=cellinside>-0.016850:    1         </td>
+<td class=cellinside>-0.150950:    3         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>0.422463 :    2         </td>
+<td class=cellinside>-2.156553:    3         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Median : -5.100         </td>
+<td class=cellinside>Median :18.00           </td>
+<td class=cellinside>-1.2   :   26           </td>
+<td class=cellinside>Median :  -7.85         </td>
+<td class=cellinside>Median :16.00           </td>
+<td class=cellinside>-1.2   :   26           </td>
+<td class=cellinside>Median :  1.000         </td>
+<td class=cellinside>Median : 1.000          </td>
+<td class=cellinside>0.0000 :  384           </td>
+<td class=cellinside>Median : 0.200          </td>
+<td class=cellinside>Median :116.35          </td>
+<td class=cellinside>Median : 0.400          </td>
+<td class=cellinside>Median :  0.100         </td>
+<td class=cellinside>Median :  5.200         </td>
+<td class=cellinside>Median :0.400           </td>
+<td class=cellinside>Median : 0.100          </td>
+<td class=cellinside>Median :  -6.550        </td>
+<td class=cellinside>Median :  0.300         </td>
+<td class=cellinside>Median :    0.090       </td>
+<td class=cellinside>Median : 0.030000       </td>
+<td class=cellinside>Median : 0.02000        </td>
+<td class=cellinside>Median :-0.1000         </td>
+<td class=cellinside>Median : -15.000        </td>
+<td class=cellinside>Median : 35.00          </td>
+<td class=cellinside>Median :-152.00         </td>
+<td class=cellinside>Median : 35.0           </td>
+<td class=cellinside>Median :601.0           </td>
+<td class=cellinside>Median :-320.0          </td>
+<td class=cellinside>Median :   0.00         </td>
+<td class=cellinside>Median :  0.000         </td>
+<td class=cellinside>Median :   0.0000       </td>
+<td class=cellinside>Median :27.00           </td>
+<td class=cellinside>Median : 40.61          </td>
+<td class=cellinside>Median :   0.00         </td>
+<td class=cellinside>Median :  5.702         </td>
+<td class=cellinside>Median :   32.517       </td>
+<td class=cellinside>Median :  0.000         </td>
+<td class=cellinside>Median : 8.133          </td>
+<td class=cellinside>Median :  66.146        </td>
+<td class=cellinside>Median :   0.000        </td>
+<td class=cellinside>Median : 16.682         </td>
+<td class=cellinside>Median :  278.309       </td>
+<td class=cellinside>Median : 0.08000        </td>
+<td class=cellinside>Median :-0.2400         </td>
+<td class=cellinside>Median : 0.2300         </td>
+<td class=cellinside>Median : -44.00         </td>
+<td class=cellinside>Median :  14.0          </td>
+<td class=cellinside>Median : -47.00         </td>
+<td class=cellinside>Median : 289.0          </td>
+<td class=cellinside>Median : 202.0          </td>
+<td class=cellinside>Median : 444.0          </td>
+<td class=cellinside>-0.04190:    1          </td>
+<td class=cellinside>-0.01311:    1          </td>
+<td class=cellinside>0.65132 :    2          </td>
+<td class=cellinside>-0.00696:    1          </td>
+<td class=cellinside>-0.01185:    1          </td>
+<td class=cellinside>0.55053 :    2          </td>
+<td class=cellinside>Median :  4.950         </td>
+<td class=cellinside>Median :  23.250        </td>
+<td class=cellinside>Median :34.00           </td>
+<td class=cellinside>Median :-22.45          </td>
+<td class=cellinside>Median : -33.85         </td>
+<td class=cellinside>Median :13.00           </td>
+<td class=cellinside>Median : 28.450         </td>
+<td class=cellinside>Median : 54.900         </td>
+<td class=cellinside>Median :22.00           </td>
+<td class=cellinside>Median :  48.17         </td>
+<td class=cellinside>Median : -20.96         </td>
+<td class=cellinside>Median :  -3.324        </td>
+<td class=cellinside>-0.3705:    2           </td>
+<td class=cellinside>-2.0833:    2           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>0.1110 :    2           </td>
+<td class=cellinside>-0.7036:    2           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Median : 14.85          </td>
+<td class=cellinside>Median :  40.05         </td>
+<td class=cellinside>-0.8   :   18           </td>
+<td class=cellinside>Median : -43.55         </td>
+<td class=cellinside>Median : -66.15         </td>
+<td class=cellinside>-0.8   :   18           </td>
+<td class=cellinside>Median : 35.05          </td>
+<td class=cellinside>Median : 41.73          </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>Median :10.00           </td>
+<td class=cellinside>Median :  1.000         </td>
+<td class=cellinside>Median :  48.23         </td>
+<td class=cellinside>Median : 12.204         </td>
+<td class=cellinside>Median :  148.95        </td>
+<td class=cellinside>Median :-19.91          </td>
+<td class=cellinside>Median : 8.089          </td>
+<td class=cellinside>Median :  65.44         </td>
+<td class=cellinside>Median :  -4.505        </td>
+<td class=cellinside>Median : 10.264         </td>
+<td class=cellinside>Median :  105.35        </td>
+<td class=cellinside>Median :   0.1300       </td>
+<td class=cellinside>Median : 0.03000        </td>
+<td class=cellinside>Median : -0.130         </td>
+<td class=cellinside>Median :  -8.00         </td>
+<td class=cellinside>Median :  41.50         </td>
+<td class=cellinside>Median :  -1.00         </td>
+<td class=cellinside>Median :-479.0          </td>
+<td class=cellinside>Median :  311           </td>
+<td class=cellinside>Median :  13.00         </td>
+<td class=cellinside>Median :  21.7000       </td>
+<td class=cellinside>Median :  9.24          </td>
+<td class=cellinside>Median :   0.00         </td>
+<td class=cellinside>-0.9169:    2           </td>
+<td class=cellinside>-0.0442:    1           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>-0.4126:    2           </td>
+<td class=cellinside>-0.6992:    2           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Median : 26.80          </td>
+<td class=cellinside>Median : 113.00         </td>
+<td class=cellinside>-1.3   :   31           </td>
+<td class=cellinside>Median :  0.000         </td>
+<td class=cellinside>Median : -61.00         </td>
+<td class=cellinside>-1.3   :   31           </td>
+<td class=cellinside>Median : 17.770         </td>
+<td class=cellinside>Median : 83.7           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>Median : 36.00          </td>
+<td class=cellinside>Median : 21.165         </td>
+<td class=cellinside>Median :  11.172        </td>
+<td class=cellinside>Median :  8.030         </td>
+<td class=cellinside>Median :   64.48        </td>
+<td class=cellinside>Median : 12.02          </td>
+<td class=cellinside>Median : 5.516          </td>
+<td class=cellinside>Median :  30.425        </td>
+<td class=cellinside>Median :   0.00         </td>
+<td class=cellinside>Median : 24.743         </td>
+<td class=cellinside>Median :  612.21        </td>
+<td class=cellinside>Median :  0.050         </td>
+<td class=cellinside>Median :  0.03000       </td>
+<td class=cellinside>Median :  0.0800        </td>
+<td class=cellinside>Median : -57.00         </td>
+<td class=cellinside>Median : 201.0          </td>
+<td class=cellinside>Median : -39.00         </td>
+<td class=cellinside>Median : -378.0         </td>
+<td class=cellinside>Median : 591.0          </td>
+<td class=cellinside>Median : 511.0          </td>
+<td class=cellinside>C:3422                  </td></tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>Mean   : 9812           </td>
+<td class=cellinside>eurico  :3070           </td>
+<td class=cellinside>Mean   :1.323e+09       </td>
+<td class=cellinside>Mean   :500656          </td>
+<td class=cellinside>05/12/2011 11:25: 1425  </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Mean   :430.6           </td>
+<td class=cellinside>Mean   : 64.41          </td>
+<td class=cellinside>Mean   :  0.3053        </td>
+<td class=cellinside>Mean   : -11.21         </td>
+<td class=cellinside>Mean   :11.31           </td>
+<td class=cellinside>-0.021024:    1         </td>
+<td class=cellinside>-0.684748:    3         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>-0.003095:    1         </td>
+<td class=cellinside>-3.072669:    3         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Mean   : -6.667         </td>
+<td class=cellinside>Mean   :12.92           </td>
+<td class=cellinside>-0.9   :   24           </td>
+<td class=cellinside>Mean   : -10.44         </td>
+<td class=cellinside>Mean   :10.76           </td>
+<td class=cellinside>-0.9   :   24           </td>
+<td class=cellinside>Mean   :  3.769         </td>
+<td class=cellinside>Mean   : 2.167          </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>Mean   : 0.926          </td>
+<td class=cellinside>Mean   : 68.06          </td>
+<td class=cellinside>Mean   : 1.337          </td>
+<td class=cellinside>Mean   :  7.699         </td>
+<td class=cellinside>Mean   :  0.520         </td>
+<td class=cellinside>Mean   :0.603           </td>
+<td class=cellinside>Mean   : 0.766          </td>
+<td class=cellinside>Mean   :  -8.831        </td>
+<td class=cellinside>Mean   :  1.341         </td>
+<td class=cellinside>Mean   :  107.487       </td>
+<td class=cellinside>Mean   :-0.005592       </td>
+<td class=cellinside>Mean   : 0.03959        </td>
+<td class=cellinside>Mean   :-0.1305         </td>
+<td class=cellinside>Mean   :  -5.595        </td>
+<td class=cellinside>Mean   : 30.15          </td>
+<td class=cellinside>Mean   : -72.59         </td>
+<td class=cellinside>Mean   : 55.6           </td>
+<td class=cellinside>Mean   :593.7           </td>
+<td class=cellinside>Mean   :-345.5          </td>
+<td class=cellinside>Mean   :  17.83         </td>
+<td class=cellinside>Mean   : -4.612         </td>
+<td class=cellinside>Mean   :  -0.6188       </td>
+<td class=cellinside>Mean   :25.51           </td>
+<td class=cellinside>Mean   : 53.23          </td>
+<td class=cellinside>Mean   :  12.68         </td>
+<td class=cellinside>Mean   : 11.201         </td>
+<td class=cellinside>Mean   :  417.264       </td>
+<td class=cellinside>Mean   : -4.901         </td>
+<td class=cellinside>Mean   :10.383          </td>
+<td class=cellinside>Mean   : 195.864        </td>
+<td class=cellinside>Mean   :   2.359        </td>
+<td class=cellinside>Mean   : 22.270         </td>
+<td class=cellinside>Mean   : 1055.933       </td>
+<td class=cellinside>Mean   : 0.04277        </td>
+<td class=cellinside>Mean   :-0.2571         </td>
+<td class=cellinside>Mean   : 0.2695         </td>
+<td class=cellinside>Mean   : -60.24         </td>
+<td class=cellinside>Mean   :  32.6          </td>
+<td class=cellinside>Mean   : -71.25         </td>
+<td class=cellinside>Mean   : 191.7          </td>
+<td class=cellinside>Mean   : 156.6          </td>
+<td class=cellinside>Mean   : 306.5          </td>
+<td class=cellinside>-0.05051:    1          </td>
+<td class=cellinside>-0.02967:    1          </td>
+<td class=cellinside>-0.01548:    1          </td>
+<td class=cellinside>-0.01884:    1          </td>
+<td class=cellinside>-0.01247:    1          </td>
+<td class=cellinside>-0.00311:    1          </td>
+<td class=cellinside>Mean   : 11.236         </td>
+<td class=cellinside>Mean   :  35.751        </td>
+<td class=cellinside>Mean   :35.46           </td>
+<td class=cellinside>Mean   :-21.22          </td>
+<td class=cellinside>Mean   : -33.92         </td>
+<td class=cellinside>Mean   :14.66           </td>
+<td class=cellinside>Mean   : 32.452         </td>
+<td class=cellinside>Mean   : 69.677         </td>
+<td class=cellinside>Mean   :20.79           </td>
+<td class=cellinside>Mean   :  23.84         </td>
+<td class=cellinside>Mean   : -10.78         </td>
+<td class=cellinside>Mean   :   1.674        </td>
+<td class=cellinside>-0.5855:    2           </td>
+<td class=cellinside>-2.0851:    2           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>1.0312 :    2           </td>
+<td class=cellinside>0.1090 :    2           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Mean   : 13.76          </td>
+<td class=cellinside>Mean   :  32.75         </td>
+<td class=cellinside>-0.3   :   16           </td>
+<td class=cellinside>Mean   : -41.24         </td>
+<td class=cellinside>Mean   : -33.18         </td>
+<td class=cellinside>-0.3   :   16           </td>
+<td class=cellinside>Mean   : 55.00          </td>
+<td class=cellinside>Mean   : 65.93          </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Mean   :13.72           </td>
+<td class=cellinside>Mean   :  4.388         </td>
+<td class=cellinside>Mean   :  23.86         </td>
+<td class=cellinside>Mean   : 20.761         </td>
+<td class=cellinside>Mean   : 1020.27        </td>
+<td class=cellinside>Mean   :-12.33          </td>
+<td class=cellinside>Mean   :13.147          </td>
+<td class=cellinside>Mean   : 350.31         </td>
+<td class=cellinside>Mean   :   0.202        </td>
+<td class=cellinside>Mean   : 16.647         </td>
+<td class=cellinside>Mean   :  589.84        </td>
+<td class=cellinside>Mean   :   0.1611       </td>
+<td class=cellinside>Mean   : 0.04606        </td>
+<td class=cellinside>Mean   : -0.129         </td>
+<td class=cellinside>Mean   : -28.62         </td>
+<td class=cellinside>Mean   :  52.63         </td>
+<td class=cellinside>Mean   : -38.32         </td>
+<td class=cellinside>Mean   :-328.5          </td>
+<td class=cellinside>Mean   :  221           </td>
+<td class=cellinside>Mean   :  46.05         </td>
+<td class=cellinside>Mean   :  33.8265       </td>
+<td class=cellinside>Mean   : 10.71          </td>
+<td class=cellinside>Mean   :  19.21         </td>
+<td class=cellinside>-0.0227:    1           </td>
+<td class=cellinside>-0.0489:    1           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>-0.0004:    1           </td>
+<td class=cellinside>-0.0113:    1           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Mean   : 24.49          </td>
+<td class=cellinside>Mean   :  81.49         </td>
+<td class=cellinside>-1.4   :   24           </td>
+<td class=cellinside>Mean   : -0.167         </td>
+<td class=cellinside>Mean   : -57.57         </td>
+<td class=cellinside>-1.4   :   24           </td>
+<td class=cellinside>Mean   : 24.653         </td>
+<td class=cellinside>Mean   :139.1           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Mean   : 34.72          </td>
+<td class=cellinside>Mean   : 33.502         </td>
+<td class=cellinside>Mean   :  33.165        </td>
+<td class=cellinside>Mean   : 41.986         </td>
+<td class=cellinside>Mean   : 5274.10        </td>
+<td class=cellinside>Mean   : 11.79          </td>
+<td class=cellinside>Mean   : 7.977          </td>
+<td class=cellinside>Mean   : 139.593        </td>
+<td class=cellinside>Mean   :  18.00         </td>
+<td class=cellinside>Mean   : 44.854         </td>
+<td class=cellinside>Mean   : 4639.85        </td>
+<td class=cellinside>Mean   :  0.158         </td>
+<td class=cellinside>Mean   :  0.07517       </td>
+<td class=cellinside>Mean   :  0.1512        </td>
+<td class=cellinside>Mean   : -61.65         </td>
+<td class=cellinside>Mean   : 163.7          </td>
+<td class=cellinside>Mean   : -55.29         </td>
+<td class=cellinside>Mean   : -312.6         </td>
+<td class=cellinside>Mean   : 380.1          </td>
+<td class=cellinside>Mean   : 393.6          </td>
+<td class=cellinside>D:3216                  </td></tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>3rd Qu.:14717           </td>
+<td class=cellinside>jeremy  :3402           </td>
+<td class=cellinside>3rd Qu.:1.323e+09       </td>
+<td class=cellinside>3rd Qu.:751891          </td>
+<td class=cellinside>02/12/2011 14:57: 1380  </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>3rd Qu.:644.0           </td>
+<td class=cellinside>3rd Qu.:123.00          </td>
+<td class=cellinside>3rd Qu.: 14.9000        </td>
+<td class=cellinside>3rd Qu.:  12.90         </td>
+<td class=cellinside>3rd Qu.:18.00           </td>
+<td class=cellinside>-0.025513:    1         </td>
+<td class=cellinside>-1.750749:    3         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>-0.010002:    1         </td>
+<td class=cellinside>-6.324555:    3         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>3rd Qu.: 18.500         </td>
+<td class=cellinside>3rd Qu.:19.00           </td>
+<td class=cellinside>-1.3   :   22           </td>
+<td class=cellinside>3rd Qu.:   9.05         </td>
+<td class=cellinside>3rd Qu.:17.00           </td>
+<td class=cellinside>-1.3   :   22           </td>
+<td class=cellinside>3rd Qu.:  2.083         </td>
+<td class=cellinside>3rd Qu.: 2.000          </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>3rd Qu.: 0.300          </td>
+<td class=cellinside>3rd Qu.:123.38          </td>
+<td class=cellinside>3rd Qu.: 0.700          </td>
+<td class=cellinside>3rd Qu.:  0.500         </td>
+<td class=cellinside>3rd Qu.: 15.775         </td>
+<td class=cellinside>3rd Qu.:0.700           </td>
+<td class=cellinside>3rd Qu.: 0.500          </td>
+<td class=cellinside>3rd Qu.:  14.125        </td>
+<td class=cellinside>3rd Qu.:  0.700         </td>
+<td class=cellinside>3rd Qu.:    0.475       </td>
+<td class=cellinside>3rd Qu.: 0.110000       </td>
+<td class=cellinside>3rd Qu.: 0.11000        </td>
+<td class=cellinside>3rd Qu.:-0.0200         </td>
+<td class=cellinside>3rd Qu.:  -5.000        </td>
+<td class=cellinside>3rd Qu.: 61.00          </td>
+<td class=cellinside>3rd Qu.:  27.00         </td>
+<td class=cellinside>3rd Qu.: 59.0           </td>
+<td class=cellinside>3rd Qu.:610.0           </td>
+<td class=cellinside>3rd Qu.:-306.0          </td>
+<td class=cellinside>3rd Qu.:  77.30         </td>
+<td class=cellinside>3rd Qu.: 11.200         </td>
+<td class=cellinside>3rd Qu.:  45.8750       </td>
+<td class=cellinside>3rd Qu.:33.00           </td>
+<td class=cellinside>3rd Qu.: 75.62          </td>
+<td class=cellinside>3rd Qu.:  76.33         </td>
+<td class=cellinside>3rd Qu.: 14.921         </td>
+<td class=cellinside>3rd Qu.:  222.647       </td>
+<td class=cellinside>3rd Qu.:  8.277         </td>
+<td class=cellinside>3rd Qu.:16.327          </td>
+<td class=cellinside>3rd Qu.: 266.576        </td>
+<td class=cellinside>3rd Qu.:  38.185        </td>
+<td class=cellinside>3rd Qu.: 35.984         </td>
+<td class=cellinside>3rd Qu.: 1294.850       </td>
+<td class=cellinside>3rd Qu.: 1.57000        </td>
+<td class=cellinside>3rd Qu.: 0.1400         </td>
+<td class=cellinside>3rd Qu.: 0.7200         </td>
+<td class=cellinside>3rd Qu.:  84.00         </td>
+<td class=cellinside>3rd Qu.: 139.0          </td>
+<td class=cellinside>3rd Qu.:  23.00         </td>
+<td class=cellinside>3rd Qu.: 637.0          </td>
+<td class=cellinside>3rd Qu.: 323.0          </td>
+<td class=cellinside>3rd Qu.: 545.0          </td>
+<td class=cellinside>-0.05695:    1          </td>
+<td class=cellinside>-0.07394:    1          </td>
+<td class=cellinside>-0.01749:    1          </td>
+<td class=cellinside>-0.03359:    1          </td>
+<td class=cellinside>-0.02063:    1          </td>
+<td class=cellinside>-0.00562:    1          </td>
+<td class=cellinside>3rd Qu.: 26.775         </td>
+<td class=cellinside>3rd Qu.:  95.975        </td>
+<td class=cellinside>3rd Qu.:41.00           </td>
+<td class=cellinside>3rd Qu.:  0.00          </td>
+<td class=cellinside>3rd Qu.:   0.00         </td>
+<td class=cellinside>3rd Qu.:19.00           </td>
+<td class=cellinside>3rd Qu.: 50.960         </td>
+<td class=cellinside>3rd Qu.:115.175         </td>
+<td class=cellinside>3rd Qu.:28.75           </td>
+<td class=cellinside>3rd Qu.:  67.61         </td>
+<td class=cellinside>3rd Qu.:  17.50         </td>
+<td class=cellinside>3rd Qu.:  79.643        </td>
+<td class=cellinside>-2.0851:    2           </td>
+<td class=cellinside>-2.0889:    2           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>-0.0082:    1           </td>
+<td class=cellinside>1.0326 :    2           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>3rd Qu.: 50.58          </td>
+<td class=cellinside>3rd Qu.: 133.22         </td>
+<td class=cellinside>-0.2   :   15           </td>
+<td class=cellinside>3rd Qu.: -25.20         </td>
+<td class=cellinside>3rd Qu.:  21.20         </td>
+<td class=cellinside>-0.2   :   15           </td>
+<td class=cellinside>3rd Qu.: 81.04          </td>
+<td class=cellinside>3rd Qu.: 99.55          </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>3rd Qu.:19.00           </td>
+<td class=cellinside>3rd Qu.:  3.434         </td>
+<td class=cellinside>3rd Qu.:  64.37         </td>
+<td class=cellinside>3rd Qu.: 26.356         </td>
+<td class=cellinside>3rd Qu.:  694.65        </td>
+<td class=cellinside>3rd Qu.: 13.21          </td>
+<td class=cellinside>3rd Qu.:19.238          </td>
+<td class=cellinside>3rd Qu.: 370.11         </td>
+<td class=cellinside>3rd Qu.:  71.234        </td>
+<td class=cellinside>3rd Qu.: 24.674         </td>
+<td class=cellinside>3rd Qu.:  608.79        </td>
+<td class=cellinside>3rd Qu.:   0.3500       </td>
+<td class=cellinside>3rd Qu.: 0.21000        </td>
+<td class=cellinside>3rd Qu.:  0.030         </td>
+<td class=cellinside>3rd Qu.:  11.00         </td>
+<td class=cellinside>3rd Qu.: 111.00         </td>
+<td class=cellinside>3rd Qu.:  38.00         </td>
+<td class=cellinside>3rd Qu.:-304.0          </td>
+<td class=cellinside>3rd Qu.:  390           </td>
+<td class=cellinside>3rd Qu.:  95.00         </td>
+<td class=cellinside>3rd Qu.: 140.0000       </td>
+<td class=cellinside>3rd Qu.: 28.40          </td>
+<td class=cellinside>3rd Qu.: 110.00         </td>
+<td class=cellinside>-0.0359:    1           </td>
+<td class=cellinside>-0.0523:    1           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>-0.0013:    1           </td>
+<td class=cellinside>-0.0131:    1           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>3rd Qu.: 45.95          </td>
+<td class=cellinside>3rd Qu.: 174.75         </td>
+<td class=cellinside>-1.5   :   24           </td>
+<td class=cellinside>3rd Qu.: 12.075         </td>
+<td class=cellinside>3rd Qu.:   0.00         </td>
+<td class=cellinside>-1.5   :   24           </td>
+<td class=cellinside>3rd Qu.: 39.875         </td>
+<td class=cellinside>3rd Qu.:350.0           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>3rd Qu.: 41.00          </td>
+<td class=cellinside>3rd Qu.: 51.240         </td>
+<td class=cellinside>3rd Qu.: 107.132        </td>
+<td class=cellinside>3rd Qu.: 85.373         </td>
+<td class=cellinside>3rd Qu.: 7289.08        </td>
+<td class=cellinside>3rd Qu.: 28.48          </td>
+<td class=cellinside>3rd Qu.:12.866          </td>
+<td class=cellinside>3rd Qu.: 165.532        </td>
+<td class=cellinside>3rd Qu.:  85.79         </td>
+<td class=cellinside>3rd Qu.: 85.817         </td>
+<td class=cellinside>3rd Qu.: 7368.41        </td>
+<td class=cellinside>3rd Qu.:  0.560         </td>
+<td class=cellinside>3rd Qu.:  1.62000       </td>
+<td class=cellinside>3rd Qu.:  0.4900        </td>
+<td class=cellinside>3rd Qu.:  76.00         </td>
+<td class=cellinside>3rd Qu.: 312.0          </td>
+<td class=cellinside>3rd Qu.:  26.00         </td>
+<td class=cellinside>3rd Qu.:  -73.0         </td>
+<td class=cellinside>3rd Qu.: 737.0          </td>
+<td class=cellinside>3rd Qu.: 653.0          </td>
+<td class=cellinside>E:3607                  </td></tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>Max.   :19622           </td>
+<td class=cellinside>pedro   :2610           </td>
+<td class=cellinside>Max.   :1.323e+09       </td>
+<td class=cellinside>Max.   :998801          </td>
+<td class=cellinside>02/12/2011 13:34: 1375  </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Max.   :864.0           </td>
+<td class=cellinside>Max.   :162.00          </td>
+<td class=cellinside>Max.   : 60.3000        </td>
+<td class=cellinside>Max.   : 179.00         </td>
+<td class=cellinside>Max.   :29.00           </td>
+<td class=cellinside>(Other)  :  391         </td>
+<td class=cellinside>(Other)  :  361         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>(Other)  :  389         </td>
+<td class=cellinside>(Other)  :  361         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Max.   :180.000         </td>
+<td class=cellinside>Max.   :30.00           </td>
+<td class=cellinside>(Other):  275           </td>
+<td class=cellinside>Max.   : 173.00         </td>
+<td class=cellinside>Max.   :23.00           </td>
+<td class=cellinside>(Other):  275           </td>
+<td class=cellinside>Max.   :360.000         </td>
+<td class=cellinside>Max.   :12.000          </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Max.   :16.500          </td>
+<td class=cellinside>Max.   :157.40          </td>
+<td class=cellinside>Max.   :14.200          </td>
+<td class=cellinside>Max.   :200.700         </td>
+<td class=cellinside>Max.   : 59.700         </td>
+<td class=cellinside>Max.   :4.000           </td>
+<td class=cellinside>Max.   :16.200          </td>
+<td class=cellinside>Max.   : 173.500        </td>
+<td class=cellinside>Max.   :176.600         </td>
+<td class=cellinside>Max.   :31183.240       </td>
+<td class=cellinside>Max.   : 2.220000       </td>
+<td class=cellinside>Max.   : 0.64000        </td>
+<td class=cellinside>Max.   : 1.6200         </td>
+<td class=cellinside>Max.   :  85.000        </td>
+<td class=cellinside>Max.   :164.00          </td>
+<td class=cellinside>Max.   : 105.00         </td>
+<td class=cellinside>Max.   :485.0           </td>
+<td class=cellinside>Max.   :673.0           </td>
+<td class=cellinside>Max.   : 293.0          </td>
+<td class=cellinside>Max.   : 180.00         </td>
+<td class=cellinside>Max.   : 88.500         </td>
+<td class=cellinside>Max.   : 180.0000       </td>
+<td class=cellinside>Max.   :66.00           </td>
+<td class=cellinside>Max.   :331.70          </td>
+<td class=cellinside>Max.   : 163.33         </td>
+<td class=cellinside>Max.   :161.964         </td>
+<td class=cellinside>Max.   :26232.208       </td>
+<td class=cellinside>Max.   : 75.659         </td>
+<td class=cellinside>Max.   :43.412          </td>
+<td class=cellinside>Max.   :1884.565        </td>
+<td class=cellinside>Max.   : 152.000        </td>
+<td class=cellinside>Max.   :177.044         </td>
+<td class=cellinside>Max.   :31344.568       </td>
+<td class=cellinside>Max.   : 4.87000        </td>
+<td class=cellinside>Max.   : 2.8400         </td>
+<td class=cellinside>Max.   : 3.0200         </td>
+<td class=cellinside>Max.   : 437.00         </td>
+<td class=cellinside>Max.   : 308.0          </td>
+<td class=cellinside>Max.   : 292.00         </td>
+<td class=cellinside>Max.   : 782.0          </td>
+<td class=cellinside>Max.   : 583.0          </td>
+<td class=cellinside>Max.   : 694.0          </td>
+<td class=cellinside>(Other) :  324          </td>
+<td class=cellinside>(Other) :  322          </td>
+<td class=cellinside>(Other) :  389          </td>
+<td class=cellinside>(Other) :  325          </td>
+<td class=cellinside>(Other) :  322          </td>
+<td class=cellinside>(Other) :  389          </td>
+<td class=cellinside>Max.   : 85.500         </td>
+<td class=cellinside>Max.   : 180.000        </td>
+<td class=cellinside>Max.   :65.00           </td>
+<td class=cellinside>Max.   : 66.40          </td>
+<td class=cellinside>Max.   : 152.00         </td>
+<td class=cellinside>Max.   :38.00           </td>
+<td class=cellinside>Max.   :119.500         </td>
+<td class=cellinside>Max.   :360.000         </td>
+<td class=cellinside>Max.   :52.00           </td>
+<td class=cellinside>Max.   : 153.55         </td>
+<td class=cellinside>Max.   : 149.40         </td>
+<td class=cellinside>Max.   : 154.952        </td>
+<td class=cellinside>(Other):  393           </td>
+<td class=cellinside>(Other):  396           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>(Other):  395           </td>
+<td class=cellinside>(Other):  396           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Max.   :137.00          </td>
+<td class=cellinside>Max.   : 155.00         </td>
+<td class=cellinside>(Other):  318           </td>
+<td class=cellinside>Max.   :  73.20         </td>
+<td class=cellinside>Max.   : 120.90         </td>
+<td class=cellinside>(Other):  318           </td>
+<td class=cellinside>Max.   :256.48          </td>
+<td class=cellinside>Max.   :273.59          </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Max.   :58.00           </td>
+<td class=cellinside>Max.   :230.428         </td>
+<td class=cellinside>Max.   : 125.99         </td>
+<td class=cellinside>Max.   :123.778         </td>
+<td class=cellinside>Max.   :15321.01        </td>
+<td class=cellinside>Max.   : 94.28          </td>
+<td class=cellinside>Max.   :82.680          </td>
+<td class=cellinside>Max.   :6836.02         </td>
+<td class=cellinside>Max.   : 134.905        </td>
+<td class=cellinside>Max.   :107.088         </td>
+<td class=cellinside>Max.   :11467.91        </td>
+<td class=cellinside>Max.   :   2.2200       </td>
+<td class=cellinside>Max.   :52.00000        </td>
+<td class=cellinside>Max.   :317.000         </td>
+<td class=cellinside>Max.   : 235.00         </td>
+<td class=cellinside>Max.   : 315.00         </td>
+<td class=cellinside>Max.   : 318.00         </td>
+<td class=cellinside>Max.   : 592.0          </td>
+<td class=cellinside>Max.   :  633           </td>
+<td class=cellinside>Max.   : 452.00         </td>
+<td class=cellinside>Max.   : 180.0000       </td>
+<td class=cellinside>Max.   : 89.80          </td>
+<td class=cellinside>Max.   : 180.00         </td>
+<td class=cellinside>(Other):  316           </td>
+<td class=cellinside>(Other):  317           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>(Other):  317           </td>
+<td class=cellinside>(Other):  313           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Max.   : 89.80          </td>
+<td class=cellinside>Max.   : 180.00         </td>
+<td class=cellinside>(Other):  211           </td>
+<td class=cellinside>Max.   : 62.100         </td>
+<td class=cellinside>Max.   : 167.00         </td>
+<td class=cellinside>(Other):  211           </td>
+<td class=cellinside>Max.   :126.000         </td>
+<td class=cellinside>Max.   :360.0           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>Max.   :108.00          </td>
+<td class=cellinside>Max.   :172.606         </td>
+<td class=cellinside>Max.   : 177.256        </td>
+<td class=cellinside>Max.   :179.171         </td>
+<td class=cellinside>Max.   :32102.24        </td>
+<td class=cellinside>Max.   : 72.09          </td>
+<td class=cellinside>Max.   :47.745          </td>
+<td class=cellinside>Max.   :2279.617        </td>
+<td class=cellinside>Max.   : 169.24         </td>
+<td class=cellinside>Max.   :197.508         </td>
+<td class=cellinside>Max.   :39009.33        </td>
+<td class=cellinside>Max.   :  3.970         </td>
+<td class=cellinside>Max.   :311.00000       </td>
+<td class=cellinside>Max.   :231.0000        </td>
+<td class=cellinside>Max.   : 477.00         </td>
+<td class=cellinside>Max.   : 923.0          </td>
+<td class=cellinside>Max.   : 291.00         </td>
+<td class=cellinside>Max.   :  672.0         </td>
+<td class=cellinside>Max.   :1480.0          </td>
+<td class=cellinside>Max.   :1090.0          </td>
+<td class=cellinside>NA                      </td></tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>(Other)         :11007  </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's     :19216         </td>
+<td class=cellinside>NA's     :19216         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's     :19216         </td>
+<td class=cellinside>NA's     :19216         </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's    :19216          </td>
+<td class=cellinside>NA's    :19216          </td>
+<td class=cellinside>NA's    :19216          </td>
+<td class=cellinside>NA's    :19216          </td>
+<td class=cellinside>NA's    :19216          </td>
+<td class=cellinside>NA's    :19216          </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA's   :19216           </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td>
+<td class=cellinside>NA                      </td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+
+ <h3 > Preprocess data and Exploratory data analysis</h3>
+
+<a name=Num10>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Preprocess data and Exploratory data analysis", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num11>&nbsp;</a>
+<p><xmp class=command>> df <- RawData</xmp></p>
+
+<a name=Num12>&nbsp;</a>
+<p><xmp class=command>> Threshold <- 0.8</xmp></p>
+
+<a name=Num13>&nbsp;</a>
+<p><xmp class=command>> RemovedCols <- 0</xmp></p>
+
+<a name=Num14>&nbsp;</a>
+<p><xmp class=command>> NbrRows <- dim(df)[1]</xmp></p>
+
+<a name=Num15>&nbsp;</a>
+<p><xmp class=command>> for (i in names(df)) {</xmp></p>
+
+<p><xmp class=command>>     tmp <- sum(!is.na(df[[i]]))</xmp></p>
+
+<p><xmp class=command>>     tmp <- tmp/NbrRows</xmp></p>
+
+<p><xmp class=command>>     if (tmp < Threshold) {</xmp></p>
+
+<p><xmp class=command>>         df[[i]] <- NULL</xmp></p>
+
+<p><xmp class=command>>         RemovedCols <- RemovedCols + 1</xmp></p>
+
+<p><xmp class=command>>     }</xmp></p>
+
+<p><xmp class=command>> }</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num16>&nbsp;</a>
+<p><xmp class=command>> print(RemovedCols)</xmp></p>
+
+<p class='numeric'>100</p>
+
+<a name=Num17>&nbsp;</a>
+<p><xmp class=command>> inTrain <- createDataPartition(df$classe, p = 0.6, list = FALSE)</xmp></p>
+
+<a name=Num18>&nbsp;</a>
+<p><xmp class=command>> Train <- df[inTrain, ]</xmp></p>
+
+<a name=Num19>&nbsp;</a>
+<p><xmp class=command>> Test <- df[-inTrain, ]</xmp></p>
+
+<a name=Num20>&nbsp;</a>
+<p><xmp class=command>> nsv <- nearZeroVar(Train)</xmp></p>
+
+<a name=Num21>&nbsp;</a>
+<p><xmp class=command>> print(nsv)</xmp></p>
+
+<p class='integer'>6</p>
+
+<a name=Num22>&nbsp;</a>
+<p><xmp class=command>> Train <- Train[, -nsv]</xmp></p>
+
+<a name=Num23>&nbsp;</a>
+<p><xmp class=command>> Test <- Test[, -nsv]</xmp></p>
+
+<a name=Num24>&nbsp;</a>
+<p><xmp class=command>> Nbr <- dim(Train)[2]</xmp></p>
+
+<a name=Num25>&nbsp;</a>
+<p><xmp class=command>> MaxDim <- 6</xmp></p>
+
+<a name=Num26>&nbsp;</a>
+<p><xmp class=command>> c <- NULL</xmp></p>
+
+<a name=Num27>&nbsp;</a>
+<p><xmp class=command>> for (j in 1:MaxDim) c <- append(c, names(Train)[j], after = length(c))</xmp></p>
+
+<p class='character'>NULL</p>
+
+ <h2 > Feature plot of uncorrelated features</h2>
+
+<a name=Num28>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Feature plot of uncorrelated features", HR = 2)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num29>&nbsp;</a>
+<p><xmp class=command>> print(featurePlot(x = Train[, c], y = Train$classe, plot = "pairs"))</xmp></p>
+
+<p class='character'></p>
+
+<p align=center><img src='GRAPH_Jun22_135749.png' border=1 width=500></p>
+
+<a name=Num30>&nbsp;</a>
+<p><xmp class=command>> HTMLplot()</xmp></p>
+
+<p class='logical'>TRUE</p>
+
+<a name=Num31>&nbsp;</a>
+<p><xmp class=command>> RemoveCols <- c(1, 2, 3, 4, 5, 6)</xmp></p>
+
+<a name=Num32>&nbsp;</a>
+<p><xmp class=command>> Train <- Train[, -RemoveCols]</xmp></p>
+
+<a name=Num33>&nbsp;</a>
+<p><xmp class=command>> Test <- Test[, -RemoveCols]</xmp></p>
+
+ <h3 > Cross validation of predictors</h3>
+
+<a name=Num34>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Cross validation of predictors", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num35>&nbsp;</a>
+<p><xmp class=command>> require(randomForest)</xmp></p>
+
+<p class='logical'>TRUE</p>
+
+<a name=Num36>&nbsp;</a>
+<p><xmp class=command>> CVResult <- rfcv(Train[, -53], Train$classe, step = 0.5)</xmp></p>
+
+ <h2 > Corss validation Plot</h2>
+
+<a name=Num37>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Corss validation Plot", HR = 2)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num38>&nbsp;</a>
+<p><xmp class=command>> with(CVResult, plot(n.var, error.cv, log = "x", type = "o", lwd = 2, </xmp></p>
+
+<p><xmp class=command>>     ylab = "Error Rate", xlab = "Number of predictors", main = "Cross Validation Error rate vs Number of predictors"))</xmp></p>
+
+<p class='character'>NULL</p>
+
+<p align=center><img src='GRAPH_Jun22_140810.png' border=1 width=500></p>
+
+<a name=Num39>&nbsp;</a>
+<p><xmp class=command>> HTMLplot()</xmp></p>
+
+<p class='logical'>TRUE</p>
+
+ <h3 > Train a classification model</h3>
+
+<a name=Num40>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Train a classification model", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num41>&nbsp;</a>
+<p><xmp class=command>> trContr <- trainControl(method = "cv", number = 5)</xmp></p>
+
+<a name=Num42>&nbsp;</a>
+<p><xmp class=command>> modelFit <- train(classe ~ ., data = Train, method = "rf", trControl = trContr)</xmp></p>
+
+ <h3 > Training results</h3>
+
+<a name=Num43>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Training results", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num44>&nbsp;</a>
+<p><xmp class=command>> modelFit</xmp></p>
+
+<p class='character'>Random Forest 
+<br>
+
+<br>
+11776 samples
+<br>
+   52 predictors
+<br>
+    5 classes: 'A', 'B', 'C', 'D', 'E' 
+<br>
+
+<br>
+No pre-processing
+<br>
+Resampling: Cross-Validated (5 fold) 
+<br>
+
+<br>
+Summary of sample sizes: 9421, 9420, 9420, 9422, 9421 
+<br>
+
+<br>
+Resampling results across tuning parameters:
+<br>
+
+<br>
+  mtry  Accuracy  Kappa  Accuracy SD  Kappa SD
+<br>
+  2     0.988     0.985  0.00271      0.00342 
+<br>
+  27    0.99      0.987  0.00229      0.0029  
+<br>
+  52    0.984     0.979  0.00248      0.00314 
+<br>
+
+<br>
+Accuracy was used to select the optimal model using  the largest value.
+<br>
+The final value used for the model was mtry = 27. </p>
+
+<a name=Num45>&nbsp;</a>
+<p><xmp class=command>> modelFit$finalModel</xmp></p>
+
+<p class='character'>
+<br>
+Call:
+<br>
+ randomForest(x = x, y = y, mtry = param$mtry) 
+<br>
+               Type of random forest: classification
+<br>
+                     Number of trees: 500
+<br>
+No. of variables tried at each split: 27
+<br>
+
+<br>
+        OOB estimate of  error rate: 0.94%
+<br>
+Confusion matrix:
+<br>
+     A    B    C    D    E class.error
+<br>
+A 3340    4    3    0    1 0.002389486
+<br>
+B   23 2243   12    1    0 0.015796402
+<br>
+C    0   11 2035    8    0 0.009250243
+<br>
+D    0    0   31 1897    2 0.017098446
+<br>
+E    0    3    4    8 2150 0.006928406</p>
+
+ <h2 > Variable importance plot</h2>
+
+<a name=Num46>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Variable importance plot", HR = 2)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num47>&nbsp;</a>
+<p><xmp class=command>> varImpPlot(modelFit$finalModel)</xmp></p>
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>MeanDecreaseGini</th> </tr>
+ 
+<tr><td class=firstcolumn>roll_belt</td>
+<td class=cellinside>1186</td></tr>
+ 
+<tr><td class=firstcolumn>pitch_belt</td>
+<td class=cellinside> 529</td></tr>
+ 
+<tr><td class=firstcolumn>yaw_belt</td>
+<td class=cellinside> 659</td></tr>
+ 
+<tr><td class=firstcolumn>total_accel_belt</td>
+<td class=cellinside>  41</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_belt_x</td>
+<td class=cellinside>  37</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_belt_y</td>
+<td class=cellinside>  42</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_belt_z</td>
+<td class=cellinside> 152</td></tr>
+ 
+<tr><td class=firstcolumn>accel_belt_x</td>
+<td class=cellinside>  31</td></tr>
+ 
+<tr><td class=firstcolumn>accel_belt_y</td>
+<td class=cellinside>  31</td></tr>
+ 
+<tr><td class=firstcolumn>accel_belt_z</td>
+<td class=cellinside> 182</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_belt_x</td>
+<td class=cellinside> 140</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_belt_y</td>
+<td class=cellinside> 169</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_belt_z</td>
+<td class=cellinside> 189</td></tr>
+ 
+<tr><td class=firstcolumn>roll_arm</td>
+<td class=cellinside> 126</td></tr>
+ 
+<tr><td class=firstcolumn>pitch_arm</td>
+<td class=cellinside>  76</td></tr>
+ 
+<tr><td class=firstcolumn>yaw_arm</td>
+<td class=cellinside> 160</td></tr>
+ 
+<tr><td class=firstcolumn>total_accel_arm</td>
+<td class=cellinside>  38</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_arm_x</td>
+<td class=cellinside>  55</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_arm_y</td>
+<td class=cellinside>  69</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_arm_z</td>
+<td class=cellinside>  21</td></tr>
+ 
+<tr><td class=firstcolumn>accel_arm_x</td>
+<td class=cellinside>  77</td></tr>
+ 
+<tr><td class=firstcolumn>accel_arm_y</td>
+<td class=cellinside>  63</td></tr>
+ 
+<tr><td class=firstcolumn>accel_arm_z</td>
+<td class=cellinside>  44</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_arm_x</td>
+<td class=cellinside> 104</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_arm_y</td>
+<td class=cellinside>  93</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_arm_z</td>
+<td class=cellinside>  82</td></tr>
+ 
+<tr><td class=firstcolumn>roll_dumbbell</td>
+<td class=cellinside> 213</td></tr>
+ 
+<tr><td class=firstcolumn>pitch_dumbbell</td>
+<td class=cellinside>  73</td></tr>
+ 
+<tr><td class=firstcolumn>yaw_dumbbell</td>
+<td class=cellinside> 120</td></tr>
+ 
+<tr><td class=firstcolumn>total_accel_dumbbell</td>
+<td class=cellinside> 157</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_dumbbell_x</td>
+<td class=cellinside>  54</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_dumbbell_y</td>
+<td class=cellinside> 104</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_dumbbell_z</td>
+<td class=cellinside>  35</td></tr>
+ 
+<tr><td class=firstcolumn>accel_dumbbell_x</td>
+<td class=cellinside> 101</td></tr>
+ 
+<tr><td class=firstcolumn>accel_dumbbell_y</td>
+<td class=cellinside> 276</td></tr>
+ 
+<tr><td class=firstcolumn>accel_dumbbell_z</td>
+<td class=cellinside> 182</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_dumbbell_x</td>
+<td class=cellinside> 239</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_dumbbell_y</td>
+<td class=cellinside> 521</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_dumbbell_z</td>
+<td class=cellinside> 559</td></tr>
+ 
+<tr><td class=firstcolumn>roll_forearm</td>
+<td class=cellinside> 525</td></tr>
+ 
+<tr><td class=firstcolumn>pitch_forearm</td>
+<td class=cellinside> 698</td></tr>
+ 
+<tr><td class=firstcolumn>yaw_forearm</td>
+<td class=cellinside>  95</td></tr>
+ 
+<tr><td class=firstcolumn>total_accel_forearm</td>
+<td class=cellinside>  42</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_forearm_x</td>
+<td class=cellinside>  24</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_forearm_y</td>
+<td class=cellinside>  53</td></tr>
+ 
+<tr><td class=firstcolumn>gyros_forearm_z</td>
+<td class=cellinside>  32</td></tr>
+ 
+<tr><td class=firstcolumn>accel_forearm_x</td>
+<td class=cellinside> 253</td></tr>
+ 
+<tr><td class=firstcolumn>accel_forearm_y</td>
+<td class=cellinside>  60</td></tr>
+ 
+<tr><td class=firstcolumn>accel_forearm_z</td>
+<td class=cellinside> 132</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_forearm_x</td>
+<td class=cellinside>  85</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_forearm_y</td>
+<td class=cellinside> 101</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_forearm_z</td>
+<td class=cellinside> 181</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+
+<p align=center><img src='GRAPH_Jun22_142042.png' border=1 width=500></p>
+
+<a name=Num48>&nbsp;</a>
+<p><xmp class=command>> HTMLplot()</xmp></p>
+
+<p class='logical'>TRUE</p>
+
+<a name=Num49>&nbsp;</a>
+<p><xmp class=command>> df.rfImportance <- data.frame(variable = names(modelFit$finalModel$importance[, </xmp></p>
+
+<p><xmp class=command>>     1]), importance = modelFit$finalModel$importance[, 1])</xmp></p>
+
+<a name=Num50>&nbsp;</a>
+<p><xmp class=command>> df.rfImportance <- df.rfImportance[order(-df.rfImportance[, 2]), </xmp></p>
+
+<p><xmp class=command>>     ]</xmp></p>
+
+<a name=Num51>&nbsp;</a>
+<p><xmp class=command>> df.rfImportance$variable <- as.character(df.rfImportance$variable)</xmp></p>
+
+<a name=Num52>&nbsp;</a>
+<p><xmp class=command>> ThresholdImp <- df.rfImportance[14, ]$importance</xmp></p>
+
+<a name=Num53>&nbsp;</a>
+<p><xmp class=command>> tmp <- df.rfImportance[df.rfImportance$importance > ThresholdImp, </xmp></p>
+
+<p><xmp class=command>>     ]$variable</xmp></p>
+
+<a name=Num54>&nbsp;</a>
+<p><xmp class=command>> NamesSmall <- append(tmp, c("classe"), after = length(tmp))</xmp></p>
+
+ <h2 > Variables in scope, based on cross validation plot, 13 in total</h2>
+
+<a name=Num55>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Variables in scope, based on cross validation plot, 13 in total", </xmp></p>
+
+<p><xmp class=command>>     HR = 2)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num56>&nbsp;</a>
+<p><xmp class=command>> NamesSmall</xmp></p>
+
+<p class='character'>roll_belt&nbsp; pitch_forearm&nbsp; yaw_belt&nbsp; magnet_dumbbell_z&nbsp; pitch_belt&nbsp; roll_forearm&nbsp; magnet_dumbbell_y&nbsp; accel_dumbbell_y&nbsp; accel_forearm_x&nbsp; magnet_dumbbell_x&nbsp; roll_dumbbell&nbsp; magnet_belt_z&nbsp; accel_dumbbell_z&nbsp; classe</p>
+
+<a name=Num57>&nbsp;</a>
+<p><xmp class=command>> TrainLess <- Train[, NamesSmall]</xmp></p>
+
+<a name=Num58>&nbsp;</a>
+<p><xmp class=command>> TestLess <- Test[, NamesSmall]</xmp></p>
+
+<a name=Num59>&nbsp;</a>
+<p><xmp class=command>> SmallmodelFit <- train(classe ~ ., data = TrainLess, method = "rf")</xmp></p>
+
+ <h3 > Training results Smaller model</h3>
+
+<a name=Num60>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Training results Smaller model", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num61>&nbsp;</a>
+<p><xmp class=command>> SmallmodelFit</xmp></p>
+
+<p class='character'>Random Forest 
+<br>
+
+<br>
+11776 samples
+<br>
+   13 predictors
+<br>
+    5 classes: 'A', 'B', 'C', 'D', 'E' 
+<br>
+
+<br>
+No pre-processing
+<br>
+Resampling: Bootstrapped (25 reps) 
+<br>
+
+<br>
+Summary of sample sizes: 11776, 11776, 11776, 11776, 11776, 11776, ... 
+<br>
+
+<br>
+Resampling results across tuning parameters:
+<br>
+
+<br>
+  mtry  Accuracy  Kappa  Accuracy SD  Kappa SD
+<br>
+  2     0.978     0.972  0.00293      0.00372 
+<br>
+  7     0.976     0.97   0.00274      0.00348 
+<br>
+  13    0.968     0.96   0.00408      0.00515 
+<br>
+
+<br>
+Accuracy was used to select the optimal model using  the largest value.
+<br>
+The final value used for the model was mtry = 2. </p>
+
+<a name=Num62>&nbsp;</a>
+<p><xmp class=command>> SmallmodelFit$finalModel</xmp></p>
+
+<p class='character'>
+<br>
+Call:
+<br>
+ randomForest(x = x, y = y, mtry = param$mtry) 
+<br>
+               Type of random forest: classification
+<br>
+                     Number of trees: 500
+<br>
+No. of variables tried at each split: 2
+<br>
+
+<br>
+        OOB estimate of  error rate: 1.64%
+<br>
+Confusion matrix:
+<br>
+     A    B    C    D    E class.error
+<br>
+A 3329   12    3    3    1  0.00567503
+<br>
+B   28 2209   37    5    0  0.03071523
+<br>
+C    1   23 2014   16    0  0.01947420
+<br>
+D    0    0   30 1898    2  0.01658031
+<br>
+E    0   18    7    7 2133  0.01478060</p>
+
+ <h2 > Variable importance plot</h2>
+
+<a name=Num63>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Variable importance plot", HR = 2)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num64>&nbsp;</a>
+<p><xmp class=command>> varImpPlot(SmallmodelFit$finalModel)</xmp></p>
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>MeanDecreaseGini</th> </tr>
+ 
+<tr><td class=firstcolumn>roll_belt</td>
+<td class=cellinside>1251</td></tr>
+ 
+<tr><td class=firstcolumn>pitch_forearm</td>
+<td class=cellinside> 744</td></tr>
+ 
+<tr><td class=firstcolumn>yaw_belt</td>
+<td class=cellinside> 962</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_dumbbell_z</td>
+<td class=cellinside> 819</td></tr>
+ 
+<tr><td class=firstcolumn>pitch_belt</td>
+<td class=cellinside> 831</td></tr>
+ 
+<tr><td class=firstcolumn>roll_forearm</td>
+<td class=cellinside> 671</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_dumbbell_y</td>
+<td class=cellinside> 697</td></tr>
+ 
+<tr><td class=firstcolumn>accel_dumbbell_y</td>
+<td class=cellinside> 550</td></tr>
+ 
+<tr><td class=firstcolumn>accel_forearm_x</td>
+<td class=cellinside> 482</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_dumbbell_x</td>
+<td class=cellinside> 628</td></tr>
+ 
+<tr><td class=firstcolumn>roll_dumbbell</td>
+<td class=cellinside> 500</td></tr>
+ 
+<tr><td class=firstcolumn>magnet_belt_z</td>
+<td class=cellinside> 599</td></tr>
+ 
+<tr><td class=firstcolumn>accel_dumbbell_z</td>
+<td class=cellinside> 536</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+
+<p align=center><img src='GRAPH_Jun22_144014.png' border=1 width=500></p>
+
+<a name=Num65>&nbsp;</a>
+<p><xmp class=command>> HTMLplot()</xmp></p>
+
+<p class='logical'>TRUE</p>
+
+ <h3 > Test model Accuracy</h3>
+
+<a name=Num66>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Test model Accuracy", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num67>&nbsp;</a>
+<p><xmp class=command>> Smallpredictions <- predict(SmallmodelFit, TestLess)</xmp></p>
+
+<a name=Num68>&nbsp;</a>
+<p><xmp class=command>> print(confusionMatrix(Smallpredictions, TestLess$classe))</xmp></p>
+
+<p class='character'>Confusion Matrix and Statistics
+<br>
+
+<br>
+          Reference
+<br>
+Prediction    A    B    C    D    E
+<br>
+         A 2224   21    2    2    0
+<br>
+         B    6 1466   19    2    6
+<br>
+         C    2   27 1327   17    3
+<br>
+         D    0    2   20 1265    6
+<br>
+         E    0    2    0    0 1427
+<br>
+
+<br>
+Overall Statistics
+<br>
+                                          
+<br>
+               Accuracy : 0.9825          
+<br>
+                 95% CI : (0.9794, 0.9853)
+<br>
+    No Information Rate : 0.2845          
+<br>
+    P-Value [Acc > NIR] : < 2.2e-16       
+<br>
+                                          
+<br>
+                  Kappa : 0.9779          
+<br>
+ Mcnemar's Test P-Value : NA              
+<br>
+
+<br>
+Statistics by Class:
+<br>
+
+<br>
+                     Class: A Class: B Class: C Class: D Class: E
+<br>
+Sensitivity            0.9964   0.9657   0.9700   0.9837   0.9896
+<br>
+Specificity            0.9955   0.9948   0.9924   0.9957   0.9997
+<br>
+Pos Pred Value         0.9889   0.9780   0.9644   0.9783   0.9986
+<br>
+Neg Pred Value         0.9986   0.9918   0.9937   0.9968   0.9977
+<br>
+Prevalence             0.2845   0.1935   0.1744   0.1639   0.1838
+<br>
+Detection Rate         0.2835   0.1868   0.1691   0.1612   0.1819
+<br>
+Detection Prevalence   0.2866   0.1911   0.1754   0.1648   0.1821
+<br>
+Balanced Accuracy      0.9960   0.9803   0.9812   0.9897   0.9946</p>
+
+<a name=Num69>&nbsp;</a>
+<p><xmp class=command>> TestData <- read.csv(file.choose(), header = TRUE, sep = ",", </xmp></p>
+
+<p><xmp class=command>>     na.strings = c("", "NA", "?"))</xmp></p>
+
+<a name=Num70>&nbsp;</a>
+<p><xmp class=command>> dim(TestData)</xmp></p>
+
+<p class='integer'>20&nbsp; 160</p>
+
+<a name=Num71>&nbsp;</a>
+<p><xmp class=command>> str(TestData)</xmp></p>
+
+<p class='character'>NULL</p>
+
+ <h3 > Prediction</h3>
+
+<a name=Num72>&nbsp;</a>
+<p><xmp class=command>> HTML.title("Prediction", HR = 3)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<a name=Num73>&nbsp;</a>
+<p><xmp class=command>> PredictTest <- as.character(predict(SmallmodelFit, TestData))</xmp></p>
+
+<a name=Num74>&nbsp;</a>
+<p><xmp class=command>> pml_write_files(PredictTest)</xmp></p>
+
+<p class='character'>NULL</p>
+
+<hr size=1>
+<font size=-1>
+	 Generated on: <i>Sun Jun 22 14:51:43 2014</i> - <b>R2HTML</b> 
+<hr size=1>
+	</body>
+</html>
