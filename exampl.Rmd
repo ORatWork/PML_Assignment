@@ -6,7 +6,10 @@ This is some text
 
 library(ggplot2)
 data(diamonds)
+
+#```{r }
 qplot(carat, price, data = diamonds, alpha = I(0.3), color = clarity)
+#```
 ```
 
 Diamond size is clearly related to price, but not in a linear fashion.
